@@ -1,6 +1,7 @@
 package com.ageoftoday.game;
 
 import com.ageoftoday.camera.CameraController;
+import com.ageoftoday.entities.units.Unit;
 import com.ageoftoday.map.Map;
 import com.ageoftoday.map.Minimap;
 import com.ageoftoday.tiles.Textures;

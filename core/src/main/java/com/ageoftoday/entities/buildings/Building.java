@@ -5,8 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 public abstract class Building extends Entity {
     protected int health;
     protected int maxHealth;
-    public Building(float x, float y, Texture texture) {
+
+    public Building(float x, float y, Texture texture, int health, int maxHealth) {
         super(x, y, texture);
+        this.health = health;
+        this.maxHealth = maxHealth;
     }
     public void takeDamage(int damage){
         this.health -= damage;
@@ -24,4 +27,6 @@ public abstract class Building extends Entity {
     public boolean isDestroyed(){
         return this.health == 0;
     }
+
+    public abstract void updateBuilding();
 }
