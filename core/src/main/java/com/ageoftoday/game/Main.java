@@ -70,10 +70,8 @@ public class Main extends ApplicationAdapter implements InputProcessor {
                 float mundoX = i * TILE_SIZE;
                 float mundoY = j * TILE_SIZE;
 
-                if (mundoX + TILE_SIZE > camera.position.x - camera.viewportWidth / 2 &&
-                    mundoX < camera.position.x + camera.viewportWidth / 2 &&
-                    mundoY + TILE_SIZE > camera.position.y - camera.viewportHeight / 2 &&
-                    mundoY < camera.position.y + camera.viewportHeight / 2) {
+                if (mundoX + TILE_SIZE > camera.position.x - camera.viewportWidth / 2 && mundoX < camera.position.x + camera.viewportWidth / 2 &&
+                    mundoY + TILE_SIZE > camera.position.y - camera.viewportHeight / 2 && mundoY < camera.position.y + camera.viewportHeight / 2) {
                     TextureRegion textureRegion = textures.getTextureForTile(map.getTiles(i, j).getTileType());
                     batch.draw(textureRegion, i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
@@ -103,8 +101,8 @@ public class Main extends ApplicationAdapter implements InputProcessor {
         shapeRenderer.dispose();
         textures.getGrassTexture().dispose();
         textures.getForestTexture().dispose();
-        textures.getMountainTexture().dispose();
-        textures.getWaterTexture().dispose();
+        //textures.getMountainTexture().dispose();
+        //textures.getWaterTexture().dispose();
     }
 
     @Override
@@ -140,7 +138,7 @@ public class Main extends ApplicationAdapter implements InputProcessor {
 
             float[] worldCoords = minimap.screenToWorldCoordinates(screenX, screenY);
 
-            float smoothFactor = 0.075f; //suavidad desplazamiento
+            float smoothFactor = 0.15f; //suavidad desplazamiento
             camera.position.x += (worldCoords[0] - camera.position.x) * smoothFactor;
             camera.position.y += (worldCoords[1] - camera.position.y) * smoothFactor;
 

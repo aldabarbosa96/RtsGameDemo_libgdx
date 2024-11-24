@@ -9,8 +9,8 @@ public class Textures {
     public void initTextures() {
         grassTexture = new Texture("grass.png");
         forestTexture = new Texture("forest.png");
-        mountainTexture = new Texture("mountain.png");
-        waterTexture = new Texture("water.png");
+        //mountainTexture = new Texture("mountain.png");
+        //waterTexture = new Texture("water.png");
     }
 
     public TextureRegion getTextureForTile(TileType type) {
@@ -19,10 +19,10 @@ public class Textures {
                 return new TextureRegion(grassTexture);
             case FOREST:
                 return new TextureRegion(forestTexture);
-            case WATER:
+            /*case WATER:
                 return new TextureRegion(waterTexture);
             case MOUNTAIN:
-                return new TextureRegion(mountainTexture);
+                return new TextureRegion(mountainTexture);*/
             default:
                 return new TextureRegion(grassTexture);
         }
