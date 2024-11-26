@@ -7,7 +7,6 @@ import com.ageoftoday.entities.units.rank.Infantry;
 import com.ageoftoday.tiles.TextureManager;
 import com.ageoftoday.map.Map;
 import com.ageoftoday.ui.Minimap;
-import com.ageoftoday.tiles.TileType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -37,6 +36,8 @@ public class Main extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public void create() {
+        int infantryWidth = 45;
+        int infrantryHeight = 55;
         map = new Map(135, 135);
 
         camera = new OrthographicCamera();
@@ -47,8 +48,8 @@ public class Main extends ApplicationAdapter implements InputProcessor {
         textureManager = new TextureManager();
         textureManager.initTextures();
 
-        entityManager = EntityManager.getInstance();
-        entityManager.addEntity(new Infantry(100, 100, UnitType.INFANTRY, textureManager.getTextureForUnit(UnitType.INFANTRY)));
+        entityManager = EntityManager.getInstance();//crear clase que gestione la instanciación de nuevas unidades (generador de unidades)
+        entityManager.addEntity(new Infantry(500, 250, infantryWidth, infrantryHeight, UnitType.INFANTRY, textureManager.getTextureForUnit(UnitType.INFANTRY)));
 
         uiCamera = new OrthographicCamera();
         uiViewport = new ScreenViewport(uiCamera);

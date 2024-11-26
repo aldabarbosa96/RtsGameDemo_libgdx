@@ -5,8 +5,8 @@ import com.ageoftoday.entities.units.UnitType;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Archer extends Unit {
-    public Archer(float x, float y,UnitType type, Texture texture) {
-        super(x, y, type,texture);
+    public Archer(float x, float y, float width, float height, UnitType type, Texture texture) {
+        super(x, y, width, height, type, texture);
     }
 
     @Override

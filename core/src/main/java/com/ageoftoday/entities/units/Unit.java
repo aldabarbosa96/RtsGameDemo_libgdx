@@ -7,8 +7,8 @@ public abstract class Unit extends Entity {
     protected UnitType type;
     protected int currentHealth;
 
-    public Unit(float x, float y, UnitType type, Texture texture) {
-        super(x, y, texture);
+    public Unit(float x, float y, float width, float height, UnitType type, Texture texture) {
+        super(x, y,width, height, texture);
         this.type = type;
         this.currentHealth = type.getHealth();
     }

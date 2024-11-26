@@ -12,8 +12,8 @@ import com.badlogic.gdx.graphics.Texture;
 public class House extends Building {
     private TextureManager textureManager;
 
-    public House(float x, float y, TextureManager textureManager) {
-        super(x, y, textureManager.getTextureForBuilding(BuildingType.HOUSE), BuildingType.HOUSE.getHealth(), BuildingType.HOUSE.getHealth());
+    public House(float x, float y, float width, float height, TextureManager textureManager) {
+        super(x, y, width, height, textureManager.getTextureForBuilding(BuildingType.HOUSE), BuildingType.HOUSE.getHealth(), BuildingType.HOUSE.getHealth());
         this.textureManager = textureManager;
     }
 
@@ -31,7 +31,7 @@ public class House extends Building {
     @Override
     public void performAction() {
         Texture citizenTexture = textureManager.getTextureForUnit(UnitType.CITIZEN);
-        Citizen citizen = new Citizen(this.getX(), this.getY(), citizenTexture);
+        Citizen citizen = new Citizen(this.getX(), this.getY(), width, height, UnitType.CITIZEN, citizenTexture);
         EntityManager.getInstance().addEntity(citizen);
         System.out.println("¡Ciudadano generado!");
     }

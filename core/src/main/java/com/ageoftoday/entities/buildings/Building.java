@@ -7,8 +7,8 @@ public abstract class Building extends Entity {
     protected int health;
     protected int maxHealth;
 
-    public Building(float x, float y, Texture texture, int health, int maxHealth) {
-        super(x, y, texture);
+    public Building(float x, float y,float width, float height, Texture texture, int health, int maxHealth) {
+        super(x, y,width, height, texture);
         this.health = health;
         this.maxHealth = maxHealth;
     }

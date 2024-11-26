@@ -5,8 +5,8 @@ import com.ageoftoday.entities.units.UnitType;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Citizen extends Unit {
-    public Citizen(float x, float y, Texture texture) {
-        super(x, y, UnitType.CITIZEN, texture);
+    public Citizen(float x, float y, float width, float height, UnitType type, Texture texture) {
+        super(x, y, width, height, type, texture);
     }
 
     @Override
