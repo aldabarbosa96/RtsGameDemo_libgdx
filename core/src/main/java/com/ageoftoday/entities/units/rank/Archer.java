@@ -1,10 +1,12 @@
-package com.ageoftoday.entities.units;
+package com.ageoftoday.entities.units.rank;
 
+import com.ageoftoday.entities.units.Unit;
+import com.ageoftoday.entities.units.UnitType;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Archer extends Unit {
-    public Archer(float x, float y, Texture texture) {
-        super(x, y, texture, UnitType.ARCHER);
+    public Archer(float x, float y,UnitType type, Texture texture) {
+        super(x, y, type,texture);
     }
 
     @Override

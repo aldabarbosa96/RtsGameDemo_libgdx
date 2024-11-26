@@ -1,6 +1,7 @@
-package com.ageoftoday.map;
+package com.ageoftoday.ui;
 
-import com.ageoftoday.tiles.Textures;
+import com.ageoftoday.map.Map;
+import com.ageoftoday.tiles.TextureManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -41,10 +42,10 @@ public class Minimap {
     }
 
 
-    public void render(SpriteBatch batch, Textures textures) {
+    public void render(SpriteBatch batch, TextureManager textureManager) {
         for (int i = 0; i < map.getWidth(); i++) {
             for (int j = 0; j < map.getHeight(); j++) {
-                TextureRegion texture = textures.getTextureForTile(map.getTiles(i, j).getTileType());
+                TextureRegion texture = textureManager.getTextureForTile(map.getTiles(i, j).getTileType());
                 float x = minimapX + i * tileScale;
                 float y = minimapY + j * tileScale;
                 batch.draw(texture, x, y, tileScale, tileScale);

@@ -14,19 +14,13 @@ public abstract class Entity {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x, y);
+        if (texture != null) {
+            batch.draw(texture, x, y);
+        }
     }
-
-    public float getX() {
-        return x;
+    public void update(float deltaTime) {
     }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setPosition(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
+    public float getX() { return x; }
+    public float getY() { return y; }
+    public void setPosition(float x, float y) { this.x = x; this.y = y; }
 }

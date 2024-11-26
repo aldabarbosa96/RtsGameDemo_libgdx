@@ -1,10 +1,13 @@
 package com.ageoftoday.game;
 
 import com.ageoftoday.camera.CameraController;
-import com.ageoftoday.entities.units.Unit;
+import com.ageoftoday.entities.EntityManager;
+import com.ageoftoday.entities.units.UnitType;
+import com.ageoftoday.entities.units.rank.Infantry;
+import com.ageoftoday.tiles.TextureManager;
 import com.ageoftoday.map.Map;
-import com.ageoftoday.map.Minimap;
-import com.ageoftoday.tiles.Textures;
+import com.ageoftoday.ui.Minimap;
+import com.ageoftoday.tiles.TileType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -26,10 +29,11 @@ public class Main extends ApplicationAdapter implements InputProcessor {
     private OrthographicCamera camera, uiCamera;
     private CameraController cameraController;
     private SpriteBatch batch;
-    private Textures textures;
+    private TextureManager textureManager;
     private ShapeRenderer shapeRenderer;
 
     private Viewport viewport, uiViewport;
+    private EntityManager entityManager;
 
     @Override
     public void create() {
@@ -40,8 +44,11 @@ public class Main extends ApplicationAdapter implements InputProcessor {
 
         cameraController = new CameraController(camera, map.getWidth(), map.getHeight(), TILE_SIZE);
         batch = new SpriteBatch();
-        textures = new Textures();
-        textures.initTextures();
+        textureManager = new TextureManager();
+        textureManager.initTextures();
+
+        entityManager = EntityManager.getInstance();
+        entityManager.addEntity(new Infantry(100, 100, UnitType.INFANTRY, textureManager.getTextureForUnit(UnitType.INFANTRY)));
 
         uiCamera = new OrthographicCamera();
         uiViewport = new ScreenViewport(uiCamera);
@@ -50,7 +57,7 @@ public class Main extends ApplicationAdapter implements InputProcessor {
 
         shapeRenderer = new ShapeRenderer();
 
-        //configuramos el input processor
+        // Configuramos el input processor
         Gdx.input.setInputProcessor(this);
     }
 
@@ -63,6 +70,7 @@ public class Main extends ApplicationAdapter implements InputProcessor {
 
         viewport.apply();
 
+        // Renderizamos el mapa
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (int i = 0; i < map.getWidth(); i++) {
@@ -70,21 +78,30 @@ public class Main extends ApplicationAdapter implements InputProcessor {
                 float mundoX = i * TILE_SIZE;
                 float mundoY = j * TILE_SIZE;
 
-                if (mundoX + TILE_SIZE > camera.position.x - camera.viewportWidth / 2 && mundoX < camera.position.x + camera.viewportWidth / 2 &&
-                    mundoY + TILE_SIZE > camera.position.y - camera.viewportHeight / 2 && mundoY < camera.position.y + camera.viewportHeight / 2) {
-                    TextureRegion textureRegion = textures.getTextureForTile(map.getTiles(i, j).getTileType());
+                if (mundoX + TILE_SIZE > camera.position.x - camera.viewportWidth / 2 &&
+                    mundoX < camera.position.x + camera.viewportWidth / 2 &&
+                    mundoY + TILE_SIZE > camera.position.y - camera.viewportHeight / 2 &&
+                    mundoY < camera.position.y + camera.viewportHeight / 2) {
+
+                    TextureRegion textureRegion = textureManager.getTextureForTile(map.getTiles(i, j).getTileType());
                     batch.draw(textureRegion, i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
         }
         batch.end();
 
+        // Actualizamos y renderizamos las entidades
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        entityManager.updateEntities(deltaTime);
+        entityManager.renderEntities(batch);
+
+        // Renderizamos la UI
         uiCamera.update();
         uiViewport.apply();
 
         batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
-        minimap.render(batch, textures);
+        minimap.render(batch, textureManager);
         batch.end();
 
         shapeRenderer.setProjectionMatrix(uiCamera.combined);
@@ -99,11 +116,9 @@ public class Main extends ApplicationAdapter implements InputProcessor {
     public void dispose() {
         batch.dispose();
         shapeRenderer.dispose();
-        textures.getGrassTexture().dispose();
-        textures.getForestTexture().dispose();
-        //textures.getMountainTexture().dispose();
-        //textures.getWaterTexture().dispose();
+        textureManager.dispose();
     }
+
 
     @Override
     public void resize(int width, int height) {

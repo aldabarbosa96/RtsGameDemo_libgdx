@@ -1,10 +1,10 @@
 package com.ageoftoday.entities.units;
 
 public enum UnitType {
-    CITIZEN("Citizen", 70, 5, 0, 1.5f),
-    INFANTRY("Infantry", 100, 10, 3, 2f),
-    CAVALRY("Cavalry", 150, 15, 6, 4f),
-    ARCHER("Archer", 80, 12, 1, 2.5f);
+    CITIZEN("Ciudadano", 70, 5, 0, 1.5f),
+    INFANTRY("Infantería", 100, 10, 3, 2f),
+    CAVALRY("Caballería", 150, 15, 6, 4f),
+    ARCHER("Arquero", 80, 12, 1, 2.5f);
 
     private final String name;
     private final int health, attack, defense;

@@ -4,37 +4,31 @@ import com.ageoftoday.entities.Entity;
 import com.badlogic.gdx.graphics.Texture;
 
 public abstract class Unit extends Entity {
-    private UnitType type;
+    protected UnitType type;
+    protected int currentHealth;
 
-    public Unit(float x, float y, Texture texture, UnitType type) {
+    public Unit(float x, float y, UnitType type, Texture texture) {
         super(x, y, texture);
         this.type = type;
+        this.currentHealth = type.getHealth();
     }
 
-    public String getName() {
-        return type.getName();
+    public void takeDamage(int damage) {
+        currentHealth -= damage;
+        if (currentHealth < 0) {
+            currentHealth = 0;
+        }
     }
 
-    public int getHealth() {
-        return type.getHealth();
-    }
+    // Getters
+    public String getName() { return type.getName(); }
+    public int getHealth() { return currentHealth; }
+    public int getAttack() { return type.getAttack(); }
+    public int getDefense() { return type.getDefense(); }
+    public float getMovement() { return type.getMovement(); }
 
-    public int getAttack() {
-        return type.getAttack();
-    }
-
-    public int getDefense() {
-        return type.getDefense();
-    }
-
-    public float getMovement() {
-        return type.getMovement();
-    }
-
-
+    // Métodos abstractos
     public abstract void attack();
     public abstract void move();
     public abstract void work();
-
 }
-

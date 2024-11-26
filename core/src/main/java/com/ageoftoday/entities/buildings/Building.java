@@ -20,11 +20,13 @@ public abstract class Building extends Entity {
         }
     }
 
-    public void repair() throws InterruptedException {
-        while (maxHealth >= health) {
-            int coeficienteReparacion = maxHealth / 10;
-            Thread.sleep((long) (Math.random() * 250));
-            health += coeficienteReparacion;
+    public void repair(float deltaTime) {
+        int repairRate = maxHealth / 10;
+        if (health < maxHealth) {
+            health += repairRate * deltaTime;
+            if (health > maxHealth) {
+                health = maxHealth;
+            }
         }
     }
 
@@ -33,6 +35,5 @@ public abstract class Building extends Entity {
     }
 
     public abstract void updateBuilding();
-
     public abstract void performAction();
 }

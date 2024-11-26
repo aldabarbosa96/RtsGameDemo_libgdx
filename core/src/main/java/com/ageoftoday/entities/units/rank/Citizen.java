@@ -1,10 +1,12 @@
-package com.ageoftoday.entities.units;
+package com.ageoftoday.entities.units.rank;
 
+import com.ageoftoday.entities.units.Unit;
+import com.ageoftoday.entities.units.UnitType;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Citizen extends Unit {
     public Citizen(float x, float y, Texture texture) {
-        super(x, y, texture, UnitType.CITIZEN);
+        super(x, y, UnitType.CITIZEN, texture);
     }
 
     @Override
