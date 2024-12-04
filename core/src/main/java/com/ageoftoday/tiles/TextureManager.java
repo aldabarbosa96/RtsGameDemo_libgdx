@@ -73,11 +73,11 @@ public class TextureManager {
         //waterTexture.dispose();
 
         infantryTexture.dispose();
-        archerTexture.dispose();
-        cavalryTexture.dispose();
-        citizenTexture.dispose();
+        //archerTexture.dispose();
+        //cavalryTexture.dispose();
+        //citizenTexture.dispose();
 
-        houseTexture.dispose();
+        //houseTexture.dispose();
         //barracksTexture.dispose();
         //archeryTexture.dispose();
         //barnTexture.dispose();

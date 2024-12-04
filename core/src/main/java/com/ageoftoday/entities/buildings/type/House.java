@@ -31,7 +31,7 @@ public class House extends Building {
     @Override
     public void performAction() {
         Texture citizenTexture = textureManager.getTextureForUnit(UnitType.CITIZEN);
-        Citizen citizen = new Citizen(this.getX(), this.getY(), width, height, UnitType.CITIZEN, citizenTexture);
+        Citizen citizen = new Citizen(this.getX(), this.getY(), UnitType.CITIZEN, citizenTexture);
         EntityManager.getInstance().addEntity(citizen);
         System.out.println("¡Ciudadano generado!");
     }

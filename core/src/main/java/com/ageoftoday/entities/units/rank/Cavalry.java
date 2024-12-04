@@ -5,8 +5,8 @@ import com.ageoftoday.entities.units.UnitType;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Cavalry extends Unit {
-    public Cavalry(float x, float y, float width, float height, UnitType type, Texture texture) {
-        super(x, y, width, height, type, texture);
+    public Cavalry(float x, float y, UnitType type, Texture texture) {
+        super(x, y, type, texture);
     }
 
     @Override

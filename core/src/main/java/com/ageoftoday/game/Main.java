@@ -2,6 +2,7 @@ package com.ageoftoday.game;
 
 import com.ageoftoday.camera.CameraController;
 import com.ageoftoday.entities.EntityManager;
+import com.ageoftoday.entities.units.UnitFactory;
 import com.ageoftoday.entities.units.UnitType;
 import com.ageoftoday.entities.units.rank.Infantry;
 import com.ageoftoday.tiles.TextureManager;
@@ -33,11 +34,11 @@ public class Main extends ApplicationAdapter implements InputProcessor {
 
     private Viewport viewport, uiViewport;
     private EntityManager entityManager;
+    private UnitFactory unitFactory;
+
 
     @Override
     public void create() {
-        int infantryWidth = 45;
-        int infrantryHeight = 55;
         map = new Map(135, 135);
 
         camera = new OrthographicCamera();
@@ -48,8 +49,10 @@ public class Main extends ApplicationAdapter implements InputProcessor {
         textureManager = new TextureManager();
         textureManager.initTextures();
 
-        entityManager = EntityManager.getInstance();//crear clase que gestione la instanciación de nuevas unidades (generador de unidades)
-        entityManager.addEntity(new Infantry(500, 250, infantryWidth, infrantryHeight, UnitType.INFANTRY, textureManager.getTextureForUnit(UnitType.INFANTRY)));
+        entityManager = EntityManager.getInstance();
+        unitFactory = new UnitFactory(textureManager, entityManager);
+
+        unitFactory.createGroups(UnitType.INFANTRY,500,175);
 
         uiCamera = new OrthographicCamera();
         uiViewport = new ScreenViewport(uiCamera);
@@ -154,7 +157,7 @@ public class Main extends ApplicationAdapter implements InputProcessor {
 
             float[] worldCoords = minimap.screenToWorldCoordinates(screenX, screenY);
 
-            float smoothFactor = 0.15f; //suavidad desplazamiento
+            float smoothFactor = 0.15f; //suavidad desplazamiento (sino tiembla mucho)
             camera.position.x += (worldCoords[0] - camera.position.x) * smoothFactor;
             camera.position.y += (worldCoords[1] - camera.position.y) * smoothFactor;
 
