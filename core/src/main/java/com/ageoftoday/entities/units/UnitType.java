@@ -4,7 +4,7 @@ public enum UnitType {
     CITIZEN("Citizen", 70, 5, 0, 1.5f, 30, 30),
     INFANTRY("Infantry", 100, 10, 3, 2f, 45, 55),
     CAVALRY("Cavalry", 150, 15, 6, 4f, 50, 60),
-    ARCHER("Archer", 80, 12, 1, 2.5f, 40, 50);
+    ARCHER("Archer", 80, 12, 1, 2.5f, 30, 40);
 
     private final String name;
     private final int health, attack, defense;

@@ -4,13 +4,12 @@ import com.ageoftoday.camera.CameraController;
 import com.ageoftoday.entities.EntityManager;
 import com.ageoftoday.entities.units.UnitFactory;
 import com.ageoftoday.entities.units.UnitType;
-import com.ageoftoday.entities.units.rank.Infantry;
+import com.ageoftoday.inputs.InputHandler;
 import com.ageoftoday.tiles.TextureManager;
 import com.ageoftoday.map.Map;
 import com.ageoftoday.ui.Minimap;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class Main extends ApplicationAdapter implements InputProcessor {
+public class Main extends ApplicationAdapter {
     private static final int TILE_SIZE = 20;
     private static final int VIRTUAL_WIDTH = 1280;
     private static final int VIRTUAL_HEIGHT = 720;
@@ -35,6 +34,7 @@ public class Main extends ApplicationAdapter implements InputProcessor {
     private Viewport viewport, uiViewport;
     private EntityManager entityManager;
     private UnitFactory unitFactory;
+    private InputHandler inputHandler;
 
 
     @Override
@@ -53,6 +53,7 @@ public class Main extends ApplicationAdapter implements InputProcessor {
         unitFactory = new UnitFactory(textureManager, entityManager);
 
         unitFactory.createGroups(UnitType.INFANTRY,500,175);
+        unitFactory.createGroups(UnitType.ARCHER,750,175);
 
         uiCamera = new OrthographicCamera();
         uiViewport = new ScreenViewport(uiCamera);
@@ -60,9 +61,10 @@ public class Main extends ApplicationAdapter implements InputProcessor {
         minimap = new Minimap(map, camera, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         shapeRenderer = new ShapeRenderer();
+        inputHandler = new InputHandler(minimap,camera,map);
 
         // Configuramos el input processor
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(inputHandler);
     }
 
     @Override
@@ -123,7 +125,6 @@ public class Main extends ApplicationAdapter implements InputProcessor {
         textureManager.dispose();
     }
 
-
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -131,80 +132,5 @@ public class Main extends ApplicationAdapter implements InputProcessor {
 
         minimap.resize(width, height);
     }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        //verificamos si el clic fue en el minimapa
-        if (minimap.isPointInside(screenX, screenY)) {
-            //convertimos las coordenadas de pantalla a coordenadas del mundo
-            float[] worldCoords = minimap.screenToWorldCoordinates(screenX, screenY);
-
-            camera.position.x = worldCoords[0];
-            camera.position.y = worldCoords[1];
-
-            //aseguramos que la cámara no se salga de los límites del mapa
-            camera.position.x = Math.max(camera.viewportWidth / 2, Math.min(camera.position.x, map.getWidth() * TILE_SIZE - camera.viewportWidth / 2));
-            camera.position.y = Math.max(camera.viewportHeight / 2, Math.min(camera.position.y, map.getHeight() * TILE_SIZE - camera.viewportHeight / 2));
-
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if (minimap.isPointInside(screenX, screenY)) {
-
-            float[] worldCoords = minimap.screenToWorldCoordinates(screenX, screenY);
-
-            float smoothFactor = 0.15f; //suavidad desplazamiento (sino tiembla mucho)
-            camera.position.x += (worldCoords[0] - camera.position.x) * smoothFactor;
-            camera.position.y += (worldCoords[1] - camera.position.y) * smoothFactor;
-
-            camera.position.x = Math.max(camera.viewportWidth / 2, Math.min(camera.position.x, map.getWidth() * TILE_SIZE - camera.viewportWidth / 2));
-            camera.position.y = Math.max(camera.viewportHeight / 2, Math.min(camera.position.y, map.getHeight() * TILE_SIZE - camera.viewportHeight / 2));
-
-            camera.update();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
-    }
-
 
 }

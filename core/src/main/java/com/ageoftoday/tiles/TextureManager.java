@@ -19,7 +19,7 @@ public class TextureManager {
 
         //unidades
         infantryTexture = new Texture("infantry.png");
-        //archerTexture = new Texture("archer.png");
+        archerTexture = new Texture("archer.png");
         //cavalryTexture = new Texture("cavalry.png");
         //citizenTexture = new Texture("citizen.png");
 
@@ -73,7 +73,7 @@ public class TextureManager {
         //waterTexture.dispose();
 
         infantryTexture.dispose();
-        //archerTexture.dispose();
+        archerTexture.dispose();
         //cavalryTexture.dispose();
         //citizenTexture.dispose();
 

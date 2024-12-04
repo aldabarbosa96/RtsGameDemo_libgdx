@@ -23,7 +23,7 @@ public class Minimap {
 
     public void resize(int screenWidth, int screenHeight) {
         int margin = 40;
-        float maxSize = Math.min(screenWidth, screenHeight) / 4.2f; //ajusta al 25% del tamaño menor de la pantalla
+        float maxSize = Math.min(screenWidth, screenHeight) / 4.2f; //ajusta al ~25% del tamaño menor de la pantalla
 
         float aspectRatio = (float) map.getWidth() / map.getHeight();
 
@@ -35,10 +35,10 @@ public class Minimap {
             minimapWidth = (int) (minimapHeight * aspectRatio);
         }
 
-        minimapX = screenWidth - minimapWidth - margin -22;
+        minimapX = screenWidth - minimapWidth - margin - 22;
         minimapY = margin;
 
-        tileScale = Math.min( minimapWidth / map.getWidth(),  minimapHeight / map.getHeight());
+        tileScale = Math.min(minimapWidth / map.getWidth(), minimapHeight / map.getHeight());
     }
 
 
@@ -61,20 +61,13 @@ public class Minimap {
         float cameraHeight = camera.viewportHeight / (map.getHeight() * 20f) * minimapHeight;
 
         shapeRenderer.setColor(1, 1, 1, 1);
-        shapeRenderer.rect(
-            minimapX + cameraX,
-            minimapY + cameraY,
-            cameraWidth,
-            cameraHeight
-        );
+        shapeRenderer.rect(minimapX + cameraX, minimapY + cameraY, cameraWidth, cameraHeight);
     }
-
 
     public boolean isPointInside(int screenX, int screenY) {//verificamos si un punto está dentro del minimapa
         //invertimos la coordenada Y porque la entrada de Gdx.input.getY() está invertida
         int invertedY = Gdx.graphics.getHeight() - screenY;
-        return screenX >= minimapX && screenX <= minimapX + minimapWidth &&
-            invertedY >= minimapY && invertedY <= minimapY + minimapHeight;
+        return screenX >= minimapX && screenX <= minimapX + minimapWidth && invertedY >= minimapY && invertedY <= minimapY + minimapHeight;
     }
 
 
